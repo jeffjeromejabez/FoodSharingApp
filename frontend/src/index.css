@@ -1,0 +1,10 @@
+/* Import custom styles */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap');
+@import './styles/main.css';
+@import './styles/navbar.css';
+@import './styles/home.css';
+@import './styles/recipe-card.css';
+@import './styles/recipe-detail.css';
+@import './styles/create-recipe.css';
+@import './styles/carousel.css';
+@import './styles/auth.css';
