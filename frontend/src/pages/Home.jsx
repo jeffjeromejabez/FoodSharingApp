@@ -8,6 +8,7 @@ const Home = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [sort, setSort] = useState('');
+  const [timeFilter, setTimeFilter] = useState('');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const categories = ['Breakfast', 'Lunch', 'Dinner', 'Dessert', 'Snack', 'Beverage'];
@@ -18,7 +19,7 @@ const Home = () => {
       fetchRecipes();
     }, 300);
     return () => clearTimeout(timeoutId);
-  }, [search, category, sort]);
+  }, [search, category, sort, timeFilter]);
 
   // Auto-slide carousel
   useEffect(() => {
@@ -36,11 +37,25 @@ const Home = () => {
       if (search.trim()) params.search = search.trim();
       if (category) params.category = category;
       if (sort) params.sort = sort;
+      if (timeFilter) params.timeFilter = timeFilter;
 
       console.log('Fetching recipes with params:', params);
       const response = await recipeAPI.getRecipes(params);
       console.log('Recipes received:', response.data.length);
-      setRecipes(response.data);
+      
+      // Client-side time filtering
+      let filteredRecipes = response.data;
+      if (timeFilter) {
+        filteredRecipes = response.data.filter(recipe => {
+          const time = recipe.cookingTime;
+          if (timeFilter === 'quick') return time <= 15;
+          if (timeFilter === 'medium') return time > 15 && time <= 30;
+          if (timeFilter === 'long') return time > 30;
+          return true;
+        });
+      }
+      
+      setRecipes(filteredRecipes);
     } catch (error) {
       console.error('Error fetching recipes:', error);
     } finally {
@@ -52,6 +67,7 @@ const Home = () => {
     setSearch('');
     setCategory('');
     setSort('');
+    setTimeFilter('');
   };
 
   const scrollToRecipes = () => {
@@ -133,6 +149,19 @@ const Home = () => {
                 {categories.map(cat => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
+              </select>
+            </div>
+
+            <div className="filter-select">
+              <select
+                value={timeFilter}
+                onChange={(e) => setTimeFilter(e.target.value)}
+                className="form-input form-select"
+              >
+                <option value="">All Times</option>
+                <option value="quick">Quick (≤15 min)</option>
+                <option value="medium">Medium (15-30 min)</option>
+                <option value="long">Long (>30 min)</option>
               </select>
             </div>
 
