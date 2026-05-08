@@ -1,0 +1,17 @@
+com\foodstagram\model\Comment.class
+com\foodstagram\security\JwtFilter.class
+com\foodstagram\FoodstagramApplication.class
+com\foodstagram\model\Rating.class
+com\foodstagram\security\SecurityConfig.class
+com\foodstagram\model\Recipe.class
+com\foodstagram\security\JwtUtil.class
+com\foodstagram\controller\RatingController.class
+com\foodstagram\repository\RatingRepository.class
+com\foodstagram\controller\CommentController.class
+com\foodstagram\repository\UserRepository.class
+com\foodstagram\repository\CommentRepository.class
+com\foodstagram\model\User.class
+com\foodstagram\security\WebConfig.class
+com\foodstagram\controller\RecipeController.class
+com\foodstagram\repository\RecipeRepository.class
+com\foodstagram\controller\AuthController.class
